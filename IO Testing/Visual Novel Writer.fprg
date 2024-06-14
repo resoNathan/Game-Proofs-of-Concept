@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Nathan"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2023-12-12 11:14:06 AM"/>
+        <attribute name="created" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDIzLTEyLTA2OzAzOjQwOjM5IFBNOzI3ODk="/>
+        <attribute name="edited" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDIzLTEyLTEyOzExOjE0OjA2IEFNOzM5OzI5MzI="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="speaker" type="String" array="False" size=""/>
+            <assign variable="speaker" expression="&quot;@&quot;"/>
+            <declare name="emotion" type="String" array="False" size=""/>
+            <assign variable="emotion" expression="&quot;:)&quot;"/>
+            <declare name="phrase" type="String" array="False" size=""/>
+            <assign variable="phrase" expression="&quot;&quot;"/>
+            <declare name="r" type="String" array="False" size=""/>
+            <output expression="&quot;Write the name of the file you would like to write to. (Make sure it's a blank .txt file, and don't write the .txt part.)&quot;" newline="True"/>
+            <input variable="r"/>
+            <open expression="r &amp; &quot;.txt&quot;" mode="write"/>
+            <call expression="help()"/>
+            <input variable="r"/>
+            <while expression="r != &quot;end&quot;">
+                <comment text="Should be a switch statement in practice."/>
+                <if expression="r == &quot;&quot;">
+                    <then/>
+                    <else>
+                        <if expression="r == &quot;help&quot;">
+                            <then>
+                                <call expression="help()"/>
+                            </then>
+                            <else>
+                                <if expression="char(r, 0) == &quot;@&quot;">
+                                    <then>
+                                        <assign variable="speaker" expression="r"/>
+                                        <write expression="&quot;`&quot;"/>
+                                    </then>
+                                    <else>
+                                        <if expression="char(r, 0) == &quot;:&quot;">
+                                            <then>
+                                                <assign variable="emotion" expression="r"/>
+                                            </then>
+                                            <else>
+                                                <assign variable="phrase" expression="r"/>
+                                                <if expression="char(r, 0) == &quot;#&quot; || char(r, 0) == &quot;`&quot;">
+                                                    <then/>
+                                                    <else>
+                                                        <call expression="speak(speaker, emotion, phrase)"/>
+                                                    </else>
+                                                </if>
+                                            </else>
+                                        </if>
+                                    </else>
+                                </if>
+                                <write expression="r"/>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+                <comment text="Input must be at the end. Otherwise, the character will say &quot;end&quot;."/>
+                <input variable="r"/>
+            </while>
+            <close/>
+            <output expression="&quot;Closed. Please check the file.&quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="help" type="None" variable="">
+        <parameters/>
+        <body>
+            <output expression="&quot;# or ` to ignore the line. Use ` for line breaks, and # for comments.&quot;" newline="True"/>
+            <output expression="&quot;@ to switch character. Ex. @John&quot;" newline="True"/>
+            <output expression="&quot;: to switch emotion. Ex. :)&quot;" newline="True"/>
+            <output expression="&quot;Say 'end' to stop the file. If you don't do this, the file will remain open and you can't do anything with it.&quot;" newline="True"/>
+            <output expression="&quot;Say 'help' to get this tutorial again. (Note that both this and 'end' are case sensitive).&quot;" newline="True"/>
+            <output expression="&quot;Anything else will be spoken by the characters.&quot;" newline="True"/>
+        </body>
+    </function>
+    <function name="speak" type="None" variable="">
+        <parameters>
+            <parameter name="speaker" type="String" array="False"/>
+            <parameter name="emotion" type="String" array="False"/>
+            <parameter name="phrase" type="String" array="False"/>
+        </parameters>
+        <body>
+            <output expression="speaker &amp; &quot;          &quot; &amp; emotion" newline="True"/>
+            <output expression="phrase" newline="True"/>
+        </body>
+    </function>
+</flowgorithm>

@@ -1,0 +1,24 @@
+#Castlevania Symphony of the Night Script
+#It scares me that I knew most of this by memory
+#For testing only
+`
+@Simon
+:(
+Die, monster! You don't belong in this world!
+`
+@Dracula
+:|
+It is not by my hand I am once again given flesh.
+I was called here by humans, who wish to pay me tribute.
+`
+@Simon
+:(
+Tribute? You steal men's souls! And make them your slaves!
+`
+@Dracula
+:|
+#Inb4 this is not a hot take this is a Castlevania quote.
+#Edit: I totally forgot the "What is a man?" part, but I'm not fixing that since this was a test anyways.
+Perhaps the same could be said of all religions.
+:(
+But enough talk. Have at you!

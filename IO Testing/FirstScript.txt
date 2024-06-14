@@ -1,0 +1,11 @@
+# # = Comment
+# ` = Line Break (functionally a comment)
+# @ = Character
+# : = Emotion
+#	Things like :) :( :/ etc.
+# Everything else gets said
+`
+@Arsene
+:)
+Hello, world!
+How's it goin?

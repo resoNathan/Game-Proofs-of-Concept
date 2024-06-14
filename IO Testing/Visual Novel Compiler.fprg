@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Nathan"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-01-10 10:20:39 AM"/>
+        <attribute name="created" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDIzLTEyLTA2OzAzOjQwOjM5IFBNOzI3ODk="/>
+        <attribute name="edited" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTAxLTEwOzEwOjIwOjM5IEFNOzI2OzI5Mjc="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <declare name="speaker" type="String" array="False" size=""/>
+            <declare name="emotion" type="String" array="False" size=""/>
+            <declare name="phrase" type="String" array="False" size=""/>
+            <declare name="r" type="String" array="False" size=""/>
+            <open expression="&quot;ArseneArsene.txt&quot;" mode="read"/>
+            <while expression="!EOF()">
+                <read variable="r"/>
+                <comment text="Should be a switch statement in practice."/>
+                <if expression="char(r, 0) == &quot;#&quot; || char(r, 0) == &quot;`&quot;">
+                    <then>
+                        <comment text="Allows for commenting. Both will cause the rest of the line to be completely ignored by the compiler."/>
+                        <comment text="# should be used for comments.&#13;&#10;` should primarily be used for line breaks."/>
+                        <comment text="` is the one below ~"/>
+                    </then>
+                    <else>
+                        <if expression="char(r, 0) == &quot;@&quot;">
+                            <then>
+                                <assign variable="speaker" expression="r"/>
+                            </then>
+                            <else>
+                                <if expression="char(r, 0) == &quot;:&quot;">
+                                    <then>
+                                        <assign variable="emotion" expression="r"/>
+                                    </then>
+                                    <else>
+                                        <assign variable="phrase" expression="r"/>
+                                        <call expression="speak(speaker, emotion, phrase)"/>
+                                    </else>
+                                </if>
+                            </else>
+                        </if>
+                    </else>
+                </if>
+            </while>
+        </body>
+    </function>
+    <function name="speak" type="None" variable="">
+        <parameters>
+            <parameter name="speaker" type="String" array="False"/>
+            <parameter name="emotion" type="String" array="False"/>
+            <parameter name="phrase" type="String" array="False"/>
+        </parameters>
+        <body>
+            <output expression="speaker &amp; &quot;          &quot; &amp; emotion" newline="True"/>
+            <output expression="phrase" newline="True"/>
+            <declare name="PressEnterToContinue" type="String" array="False" size=""/>
+            <input variable="PressEnterToContinue"/>
+        </body>
+    </function>
+</flowgorithm>
