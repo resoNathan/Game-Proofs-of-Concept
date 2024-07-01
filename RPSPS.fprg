@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Nathan"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-07-01 01:22:43 PM"/>
+        <attribute name="created" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTA3LTAxOzEwOjMwOjE1IEFNOzI3NjU="/>
+        <attribute name="edited" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTA3LTAxOzAxOjIyOjQzIFBNOzc7Mjg5Ng=="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <comment text="Notes:&#13;&#10;-Each throw should have it's own sound queue, with a different note and instrument. Lose commands go up a step (15 26), while tie commands go down (15 74). Not commands are discordant versions of the regular ones."/>
+            <declare name="points" type="Integer" array="False" size=""/>
+            <assign variable="points" expression="0"/>
+            <declare name="lives" type="Integer" array="False" size=""/>
+            <assign variable="lives" expression="3"/>
+            <declare name="throw" type="Integer" array="False" size=""/>
+            <declare name="goal" type="Integer" array="False" size=""/>
+            <comment text="TODO: Add loss/tie/don't conditions"/>
+            <assign variable="goal" expression="1"/>
+            <while expression="lives &gt; 0">
+                <output expression="&quot;Points: &quot; &amp; points &amp; ToChar(13) &amp; &quot;Lives: &quot; &amp; lives" newline="True"/>
+                <assign variable="throw" expression="Random(3) + 1"/>
+                <if expression="playRound(throw, goal)">
+                    <then>
+                        <assign variable="points" expression="points + 1"/>
+                    </then>
+                    <else>
+                        <assign variable="lives" expression="lives - 1"/>
+                        <output expression="&quot;WRONG! &quot; &amp; lives &amp; &quot; LIVES REMAINING!&quot;" newline="True"/>
+                    </else>
+                </if>
+            </while>
+            <output expression="&quot;GAME OVER!&quot; &amp; ToChar(13) &amp; &quot;Final Score: &quot; &amp; points" newline="True"/>
+        </body>
+    </function>
+    <function name="getName" type="String" variable="name">
+        <parameters>
+            <parameter name="throw" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="names" type="String" array="True" size="4"/>
+            <assign variable="names[1]" expression="&quot;Rock&quot;"/>
+            <assign variable="names[2]" expression="&quot;Paper&quot;"/>
+            <assign variable="names[3]" expression="&quot;Scissors&quot;"/>
+            <declare name="name" type="String" array="False" size=""/>
+            <assign variable="name" expression="names[throw]"/>
+        </body>
+    </function>
+    <function name="playRound" type="Boolean" variable="pass">
+        <parameters>
+            <parameter name="throw" type="Integer" array="False"/>
+            <parameter name="goal" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <output expression="getName(throw)" newline="True"/>
+            <declare name="player" type="Integer" array="False" size=""/>
+            <input variable="player"/>
+            <declare name="pass" type="Boolean" array="False" size=""/>
+            <assign variable="pass" expression="rps(player, throw) == goal"/>
+        </body>
+    </function>
+    <function name="rps" type="Integer" variable="win">
+        <parameters>
+            <parameter name="p1" type="Integer" array="False"/>
+            <parameter name="p2" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <declare name="win" type="Integer" array="False" size=""/>
+            <if expression="p1 == 2 or p2 == 2">
+                <then>
+                    <assign variable="win" expression="p1 - p2"/>
+                </then>
+                <else>
+                    <assign variable="win" expression="p1%3 - p2%3"/>
+                </else>
+            </if>
+        </body>
+    </function>
+</flowgorithm>
