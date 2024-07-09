@@ -4,9 +4,9 @@
         <attribute name="name" value=""/>
         <attribute name="authors" value="Nathan"/>
         <attribute name="about" value=""/>
-        <attribute name="saved" value="2024-07-01 01:22:43 PM"/>
+        <attribute name="saved" value="2024-07-09 03:49:28 PM"/>
         <attribute name="created" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTA3LTAxOzEwOjMwOjE1IEFNOzI3NjU="/>
-        <attribute name="edited" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTA3LTAxOzAxOjIyOjQzIFBNOzc7Mjg5Ng=="/>
+        <attribute name="edited" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTA3LTA5OzAzOjQ5OjI4IFBNOzExOzI5NjE="/>
     </attributes>
     <function name="Main" type="None" variable="">
         <parameters/>
@@ -18,7 +18,7 @@
             <assign variable="lives" expression="3"/>
             <declare name="throw" type="Integer" array="False" size=""/>
             <declare name="goal" type="Integer" array="False" size=""/>
-            <comment text="TODO: Add loss/tie/don't conditions"/>
+            <comment text="TODO: Add loss/tie conditions&#13;&#10;Later potentially add don't conditions (don't win = lose or tie)"/>
             <assign variable="goal" expression="1"/>
             <while expression="lives &gt; 0">
                 <output expression="&quot;Points: &quot; &amp; points &amp; ToChar(13) &amp; &quot;Lives: &quot; &amp; lives" newline="True"/>
@@ -41,6 +41,7 @@
             <parameter name="throw" type="Integer" array="False"/>
         </parameters>
         <body>
+            <comment text="In any other language this would just be a string array in the main code."/>
             <declare name="names" type="String" array="True" size="4"/>
             <assign variable="names[1]" expression="&quot;Rock&quot;"/>
             <assign variable="names[2]" expression="&quot;Paper&quot;"/>
@@ -68,6 +69,7 @@
             <parameter name="p2" type="Integer" array="False"/>
         </parameters>
         <body>
+            <comment text="Results are from P1's side&#13;&#10;1 = Win&#13;&#10;0 = Tie&#13;&#10;-1 = Loss"/>
             <declare name="win" type="Integer" array="False" size=""/>
             <if expression="p1 == 2 or p2 == 2">
                 <then>

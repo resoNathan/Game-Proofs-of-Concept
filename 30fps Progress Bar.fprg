@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="Nathan"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2024-07-09 02:00:15 PM"/>
+        <attribute name="created" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTA3LTA5OzEwOjI1OjU5IEFNOzI3ODU="/>
+        <attribute name="edited" value="TmF0aGFuO05ST0JFUlRTLUxQVDsyMDI0LTA3LTA5OzAyOjAwOjE1IFBNOzEwOzI5NDI="/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <comment text="Made as a proof of concept for a Pico-8 timer system."/>
+            <declare name="seconds" type="Real" array="False" size=""/>
+            <comment text="CHANGE THIS VALUE&#13;&#10;VVV"/>
+            <assign variable="seconds" expression="1.5"/>
+            <comment text="Note that things get slightly wonky if it has more than 1 decimal place (ex. 1.23), since it won't cleanly divide the frames by 100, so it may be off by a few frames. Worst case is that the player gets an extra 30th of a second to react."/>
+            <declare name="percent" type="Integer" array="False" size=""/>
+            <declare name="totalFrames" type="Integer" array="False" size=""/>
+            <assign variable="totalFrames" expression="seconds * 30"/>
+            <declare name="oneper" type="Real" array="False" size=""/>
+            <assign variable="oneper" expression="totalFrames/100"/>
+            <declare name="frames" type="Integer" array="False" size=""/>
+            <for variable="frames" start="totalFrames" end="0" direction="dec" step="1">
+                <assign variable="percent" expression="frames/oneper"/>
+                <output expression="charTimes(&quot;|&quot;, percent) &amp; charTimes(&quot;.&quot;, (100-percent))" newline="True"/>
+            </for>
+        </body>
+    </function>
+    <function name="charTimes" type="String" variable="r">
+        <parameters>
+            <parameter name="c" type="String" array="False"/>
+            <parameter name="n" type="Integer" array="False"/>
+        </parameters>
+        <body>
+            <comment text="NOTE: Only used in Flowgorithm. Most languages should let you use &quot;#&quot;*n instead."/>
+            <declare name="r" type="String" array="False" size=""/>
+            <assign variable="r" expression="&quot;&quot;"/>
+            <declare name="i" type="Integer" array="False" size=""/>
+            <for variable="i" start="1" end="n" direction="inc" step="1">
+                <assign variable="r" expression="r &amp; c"/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>
