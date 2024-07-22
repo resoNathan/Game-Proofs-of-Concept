@@ -3,7 +3,7 @@
 ♪ detect held down press (bad ending)
 ♪ detect no action (no ending)
 … detect left presses (begin of ending)
-… detect xo patterns (true ending)
+… detect ❎🅾️ patterns (true ending)
 … create cutscene handler
 	… write scripts
 	… display text
@@ -11,6 +11,11 @@
 	… draw(/commission) art
 … add prophecy to menu
 	… write prophecy with hints
+	… find alternative for ctrl+r users??
+… create vfx
+	… begin ending ambiance (tick tock?)
+	… bad ending (static?)
+	… no ending? (static again???)
 --]]
 
 function _init()
@@ -40,7 +45,7 @@ function _update()
 		if btn(⬇️) then 
 			timer = timer - 1
 			if timer < 1 then cutscene(4) end-- bad ending
-		else --i.e. if ️⬇️ is released
+		else --i.e. if ⬇️ is released
 			cutscene(2) end -- good ending
 	end--of stage 1
 end--of _update()
