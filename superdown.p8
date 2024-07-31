@@ -1,6 +1,20 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
+function _init()
+	--custom color palette
+	--poke(0x5f2e, 1) --changes color consoleside (i think)
+	--pal({128, 131, 3, 139, 11, 138, 135} ,1)
+	--pal({131, 3, 139, 11, 138, 135} ,1)
+	pal({128, 5, 6, 7} ,1)
+	
+	-- variable declarations
+	stage = 0
+	maxtimer = 10 * 30 --seconds * frames
+	timer = maxtimer
+	bgcolor=2
+end--of _init()
+
 function _draw()
 	--will eventually be replaced with a mode switch
 	draw_main()
@@ -8,18 +22,19 @@ end
 
 function draw_main()
 	--bg
-	cls()
+	cls(4)
 	
 	--plate
-	circfill(60, 71, 37, 5)
+	--circfill(60, 71, 37, 1)
 	
 	--button side
-	circfill(60, 70, 30, 3)
+	circfill(60, 70, 30, 2)
 	
 	--button top
-	circfill(60, (btn(⬇️) and 65 or 60), 30, 11)
+	circfill(60, (btn(⬇️) and 65 or 60), 30, 3)
 	
-	--test
+	--print menu text
+	color(1)
 	print("\^w\^tsuper press down")
 	print("remake deluxe final mix core +r")
 	print("press ⬇️ to play!", 27, 120)
