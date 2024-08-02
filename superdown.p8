@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
+-- ⌂ required and helper funcs
 function _init()
 	--custom color palette
 	--poke(0x5f2e, 1) --changes color consoleside (i think)
@@ -20,18 +21,45 @@ function _draw()
 	draw_main()
 end
 
+-------------------------------
+				-- helper functions --
+function circall(x,y,r,inner,outer)
+	circfill(x,y,r,inner)
+	circ(x,y,r,outer)
+end
+
+function hcenter(s)
+  -- screen center minus the
+  -- string length times the 
+  -- pixels in a char's width,
+  -- cut in half
+  return 64-#s*2
+end
+
+function vcenter(s)
+  -- screen center minus the
+  -- string height in pixels,
+  -- cut in half
+  return 61
+end
+
+-->8
+-- ⬇️ title screen
+
+
 function draw_main()
 	--bg
 	cls(4)
 	
 	--plate
-	--circfill(60, 71, 37, 1)
+	--circfill(60, 71, 37, 3)
+	circall(60, 71, 37, 3, 1)
 	
 	--button side
-	circfill(60, 70, 30, 2)
+	circall(60, 70, 30, 2, 1)
 	
 	--button top
-	circfill(60, (btn(⬇️) and 65 or 60), 30, 3)
+	circall(60, (btn(⬇️) and 65 or 60), 30, 3, 1)
 	
 	--print menu text
 	color(1)
@@ -39,6 +67,21 @@ function draw_main()
 	print("remake deluxe final mix core +r")
 	print("press ⬇️ to play!", 27, 120)
 end
+-->8
+-- ⧗ cutscenes (todo)
+text_good = [[and so, our hero
+bravely stepped
+into the street,
+victorious against
+the great evil that
+was...
+
+
+the down button
+
+
+having slain the
+mighty beast...]]
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -46,3 +89,6 @@ __gfx__
 00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00700700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+__sfx__
+000100001d0501d050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
