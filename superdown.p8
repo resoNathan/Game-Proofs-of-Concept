@@ -7,18 +7,22 @@ function _init()
 	--poke(0x5f2e, 1) --changes color consoleside (i think)
 	--pal({128, 131, 3, 139, 11, 138, 135} ,1)
 	--pal({131, 3, 139, 11, 138, 135} ,1)
-	pal({128, 5, 6, 7} ,1)
+	pal({128, 5, 6, 7,5,6,7,6} ,1)
 	
 	-- variable declarations
 	stage = 0
 	maxtimer = 10 * 30 --seconds * frames
 	timer = maxtimer
-	bgcolor=2
+	cut = 0
 end--of _init()
 
 function _draw()
-	--will eventually be replaced with a mode switch
-	draw_main()
+	if stage == 2 then draw_end()
+	else draw_main() end
+end
+
+function _update()
+	if stage < 2 then update_main() end
 end
 
 -------------------------------
@@ -67,8 +71,44 @@ function draw_main()
 	print("remake deluxe final mix core +r")
 	print("press ⬇️ to play!", 27, 120)
 end
+
+function update_main()
+	-- stage 0 is initial splash screen
+	if stage == 0 then
+		-- tick down timer if nothing is pressed...
+		-- ...but reset it if something is pressed.
+		timer = btn() < 1 and timer-1 or maxtimer
+		
+		-- check for "press nothing" ending
+		if timer < 1 then stage = 2; cut = 3 end
+		
+		-- todo: check for left presses for the "meet ☉" ending
+		
+		-- finally, check for a down press (like any sane developer would've done first)
+		if btn(⬇️) then stage = 1; timer = 5 * 30 end
+	--end of stage 0
+	elseif stage == 1 then
+		if btn(⬇️) then 
+			timer = timer - 1
+			if timer < 1 then stage = 2; cut = 2 end-- bad ending
+		else --i.e. if ⬇️ is released
+			stage = 2; cut = 1 end -- good ending
+	end--of stage 1
+end--of _update()
 -->8
 -- ⧗ cutscenes (todo)
+
+-- prototype version
+function draw_end()
+	--bg
+	cls(1)
+	
+	--temporary ending text
+	color(4)
+	print("\^w\^tending "..cut)
+end	
+
+-- this may be used, idk
 text_good = [[and so, our hero
 bravely stepped
 into the street,
