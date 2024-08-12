@@ -5,15 +5,14 @@ __lua__
 function _init()
 	--custom color palette
 	--poke(0x5f2e, 1) --changes color consoleside (i think)
-	--pal({128, 131, 3, 139, 11, 138, 135} ,1)
-	--pal({131, 3, 139, 11, 138, 135} ,1)
-	pal({128, 5, 6, 7,5,6,7,6} ,1)
+	--pal({128, 5, 6, 7} ,1)
+	pal({128, 5, 6, 7,  5,6,7,6} ,1)
 	
 	-- variable declarations
 	stage = 0
 	maxtimer = 10 * 30 --seconds * frames
 	timer = maxtimer
-	cut = 0
+	scene = 0
 end--of _init()
 
 function _draw()
@@ -80,7 +79,7 @@ function update_main()
 		timer = btn() < 1 and timer-1 or maxtimer
 		
 		-- check for "press nothing" ending
-		if timer < 1 then stage = 2; cut = 3 end
+		if timer < 1 then stage = 2; scene = 3 end
 		
 		-- todo: check for left presses for the "meet ☉" ending
 		
@@ -90,9 +89,9 @@ function update_main()
 	elseif stage == 1 then
 		if btn(⬇️) then 
 			timer = timer - 1
-			if timer < 1 then stage = 2; cut = 2 end-- bad ending
+			if timer < 1 then stage = 2; scene = 2 end-- bad ending
 		else --i.e. if ⬇️ is released
-			stage = 2; cut = 1 end -- good ending
+			stage = 2; scene = 1 end -- good ending
 	end--of stage 1
 end--of _update()
 -->8
@@ -105,23 +104,32 @@ function draw_end()
 	
 	--temporary ending text
 	color(4)
-	print("\^w\^tending "..cut)
+	write_box(text_good)
+	
 end	
 
--- this may be used, idk
-text_good = [[and so, our hero
+function write_box(text)
+	y = 0
+	for i = 1, #text do
+		print(text[i], hcenter(text[i]), y)
+		y += 10
+	end
+end
+
+-- ending text
+	--editor's note: how am i supposed to make walls of text in pico-8?
+	--lzw seems like overkill, but these feel like headaches waiting to happen.
+text_good = split([[and so, our hero
 bravely stepped
 into the street,
 victorious against
 the great evil that
 was...
 
-
 the down button
 
-
 having slain the
-mighty beast...]]
+mighty beast...]], '\n')
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -129,6 +137,8 @@ __gfx__
 00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00077000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00700700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+__map__
+0000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __sfx__
 000100001d0501d050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 000f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
