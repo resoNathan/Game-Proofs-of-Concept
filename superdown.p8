@@ -100,8 +100,7 @@ end--of _update()
 -- prototype version
 function draw_end()
 	--bg
-	cls(1)
-	
+	cls(1)	
 	--temporary ending text
 	color(4)
 	write_box(text_good)
@@ -109,10 +108,14 @@ function draw_end()
 end	
 
 function write_box(text)
-	y = 0
-	for i = 1, #text do
-		print(text[i], hcenter(text[i]), y)
-		y += 10
+	i = 1
+	while i <= #text do
+		y = 0
+		for _=1,1  do
+			print(text[i], hcenter(text[i]), y)
+			y += 10
+			i += 1
+			end
 	end
 end
 
@@ -122,14 +125,15 @@ end
 text_good = split([[and so, our hero
 bravely stepped
 into the street,
-victorious against
+|victorious against
 the great evil that
 was...
-
+|
 the down button
 
+|our great hero,
 having slain the
-mighty beast...]], '\n')
+mighty beast...]], '|')
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
