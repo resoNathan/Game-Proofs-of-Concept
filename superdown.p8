@@ -79,7 +79,7 @@ function update_main()
 		timer = btn() < 1 and timer-1 or maxtimer
 		
 		-- check for "press nothing" ending
-		if timer < 1 then stage = 2; scene = 3 end
+		if timer < 1 then init_end(3) end
 		
 		-- todo: check for left presses for the "meet ☉" ending
 		
@@ -91,27 +91,37 @@ function update_main()
 			timer = timer - 1
 			if timer < 1 then stage = 2; scene = 2 end-- bad ending
 		else --i.e. if ⬇️ is released
-			stage = 2; scene = 1 end -- good ending
+			init_end(1) end -- good ending
 	end--of stage 1
 end--of _update()
 -->8
--- ⧗ cutscenes (todo)
+-- ⧗ cutscenes (wip)
 
--- prototype version
+function init_end(temps)
+	stage = 2
+	scene = temps
+	timedir = 1
+	timer = 0
+end
+
 function draw_end()
 	--bg
 	cls(1)	
 	--temporary ending text
 	color(4)
 	write_box(text_good)
-	
 end	
+
+function update_end()
+	timer += timedir
+	if timer % maxtimer then timedir *= -1 end
+end
 
 function write_box(text)
 	i = 1
-	while i <= #text do
+	while i <= #text and timer == 0 do
 		y = 0
-		for _=1,1  do
+		for _=1,3  do
 			print(text[i], hcenter(text[i]), y)
 			y += 10
 			i += 1
@@ -125,15 +135,15 @@ end
 text_good = split([[and so, our hero
 bravely stepped
 into the street,
-|victorious against
+victorious against
 the great evil that
 was...
-|
+
 the down button
 
-|our great hero,
+our great hero,
 having slain the
-mighty beast...]], '|')
+mighty beast...]], '\n')
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
