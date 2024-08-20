@@ -10,7 +10,7 @@ function _init()
 	
 	-- variable declarations
 	stage = 0
-	maxtimer = 10 * 30 --seconds * frames
+	maxtimer = 30 * 30 --seconds * frames
 	timer = maxtimer
 	scene = 0
 end--of _init()
@@ -78,6 +78,8 @@ function update_main()
 		-- tick down timer if nothing is pressed...
 		-- ...but reset it if something is pressed.
 		timer = btn() < 1 and timer-1 or maxtimer
+		-- tick tock
+		if timer%30==0 and timer<=10*30 then sfx(1) end
 		
 		-- check for "press nothing" ending
 		if timer < 1 then init_end(3) end
@@ -85,7 +87,7 @@ function update_main()
 		-- todo: check for left presses for the "meet ☉" ending
 		
 		-- finally, check for a down press (like any sane developer would've done first)
-		if btn(⬇️) then stage = 1; timer = 5 * 30 end
+		if btn(⬇️) then sfx(0);stage = 1; timer = 5 * 30 end
 	--end of stage 0
 	elseif stage == 1 then
 		if btn(⬇️) then 
@@ -103,20 +105,22 @@ function init_end(temps)
 	scene = temps
 	timedir = 1
 	timer = 0
-	maxtimer = 30*3
+	maxtimer = 30*5
 	bar = 1
+	
+	sfx(2)
 end
 
 function draw_end()
 	--bg
 	cls(1)	
-	--temporary ending text
+	--ending text
 	color(4)
 	write_box(text_good,bar,50)
 	--blocker
-	rectfill(timer*1.5,50,127,127,1)
+	rectfill(timer,50,127,127,1)
 	
-	--temporary timer
+	--timer (for testing)
 	print(timer,0,100,4)
 end	
 
@@ -124,6 +128,9 @@ function update_end()
 	timer += timedir
 	if timer % maxtimer == 0 then timedir *= -1 end
 	if timer == 0 then bar=(bar+3)%#text_good end
+	
+	--debug back to main menu
+	if btn(❎) then _init() end
 end
 
 function write_box(text, s, y)
@@ -187,5 +194,6 @@ __gfx__
 __map__
 0000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __sfx__
-000100001d0501d050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-000f00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000100002467024650156301561000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
+000100001d4301a640174501864017440156300e43002020030500105002050020500105000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000900001d6601a650176501864017640156300e6300b620096100961005610026100161000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
