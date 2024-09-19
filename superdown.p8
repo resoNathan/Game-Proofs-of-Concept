@@ -56,8 +56,7 @@ function _draw()
 end
 
 function _update()
-	if stage == -2 then update_ohno()
-	elseif stage < 0 then --do nothing
+	if stage < 0 then --do nothing
 	elseif stage < 2 then update_main()
 	elseif stage >= 2 then update_end() end
 end
@@ -71,6 +70,15 @@ end
 
 function textsplit(para)
 	return split(para, '\n')
+end
+
+function blackout(t,s,c)
+	stage=-9
+	for i=1,t do
+		cls(c)
+		flip()
+	end
+	stage=s
 end
 
 function hcenter(s)
@@ -111,7 +119,7 @@ function update_main()
 	elseif stage == 1 then
 		if btn(⬇️) then 
 			timer = timer - 1
-			if timer < 1 then timer = 20; stage = -2 end-- hold ending
+			if timer < 1 then hold_scare() end-- hold ending
 		else --i.e. if ⬇️ is released
 			sfx(2);init_end(1) end -- good ending
 	end--of stage 1
@@ -141,8 +149,8 @@ end
 -- ⧗ cutscenes
 
 function init_end(temps)
-	stage = 2
 	scene = temps
+	stage = 2
 	timedir = 1
 	timer = 0
 	maxtimer = 30*3.5
@@ -195,14 +203,46 @@ function write_box(text, s, y)
 end
 -->8
 -- ☉ scary vfx
-
-function update_ohno()
-	if timer < 1 then  init_end(3)
-	else timer -= 1 end
+function hold_scare()
+	--jumpscare
+	for j=0,20 do
+		sfx(3,-1,0,1)
+		for i=0,j+5 do
+		print("\^w\^t☉",rnd(137)-5,rnd(137)-5,1) end
+		flip()
+	end
 	
-	sfx(3,-1,0,1)
-	for i=0,20 do
-	print("\^w\^t☉",rnd(137)-5,rnd(137)-5,1) end
+	--reboot blinking
+	blackout(71,-1,0)
+	blackout(1,-1,4)
+	print "\ai6c"
+	blackout(12,-1,0)
+	blackout(22,-1,1)
+	
+	--switch bg color (for scroll)
+	pal(0,128,1)
+	
+	--write console log
+	texty=0
+	for _,logline in pairs(textsplit(text_error)) do
+		print(logline,4)
+		for i=0,1.2*#logline do
+			flip()
+		end
+	end
+	
+	--switch bg color back
+	pal(0,0,1)
+	
+	--shorter reboot
+	blackout(13,-1,0)
+	blackout(1,-1,4)
+	blackout(9,-1,1)
+	blackout(2,-1,0)
+	
+	--begin true cutscene
+	init_end(2)
+	ctn_adv()
 end
 -->8
 -- ▤ ending dialogue
@@ -241,12 +281,12 @@ days... turned to months...
 and yet, the promised
 hero of legend
 never arrived]]
-text_wait_2=[[even still, we remain hopeful…
--
--
-we remain vigilant...
--
--
+text_wait_2=[[even still, we remain hopeful
+for what the future
+hold for us...
+we remain vigilant
+for what waits for
+us in the future...
 and above all else...
 w e
 r e m a i n
@@ -260,22 +300,38 @@ if we are what's left...
 then we have been left
 in capable hands.]]
 --ending 3 (hold)
-text_error=[[exited with error code 51331:
-unexpected entity on title screen
-attempting to troubleshoot...
-eliminate entity: 
-fail
-reenforce barrier: 
-fail
-reenf🅾️rce █▒██▒
-f█il
-access title: 
-fail
-access ending: 
-partial success
-load contingency ending: 
+text_error=[[exited with error code 125620:
+reason for crash:
+unexpected entity found
+
+
+begin troubleshooting...
+attempting to locate entity:
 success
-reboot in safe mode:]]
+	location:
+	title screen
+
+attempting to eliminate entity: 
+fail
+attempting to reenforce barrier: 
+fail
+att3mpting to load music:
+f█il
+attempting to access title: 
+fail
+attempting to access ending: 
+partial success
+attempting to load ending:
+	good ending:
+	fail
+	bad ending:
+	fail
+	686f6c646c656674.rom:
+		error: unknown
+		flagged for remediation
+	contingency ending: 
+	success
+attempting to reboot console:]]
 text_contingency=[[]]
 
 --script placements
@@ -460,7 +516,7 @@ __sfx__
 000100001d4301a640174501864017440156300e43002020030500105002050020500105000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 000900001d6601a650176501864017640156300e6300b620096100961005610026100161000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
 050a00011c35000300003000030000300003000030018300183001830018300183001830018300183000030000300003000030000300003000030000300003000030000300003000030000300003000030000000
-001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
