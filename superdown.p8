@@ -10,9 +10,9 @@ endings and don't want to know
 what they are, stop reading
 this code.
 
-abandon all hope ye
-good programmers who
-enter here.
+a b a n d o n   a l l   h o p e
+  y e   p r o g r a m m e r s
+ w h o   e n t e r   h e r e .
 
 scenes (endings):
 1: good ending (press and release)
@@ -32,6 +32,9 @@ stages (game states):
 -->8
 -- ⌂ required and helper funcs
 function _init()
+	--debug menu
+	menuitem(1,"debug: timer 2 sec",function() timer=60 end)
+
 	--custom color palette
 	--poke(0x5f2e, 1) --changes color consoleside (i think)
 	--pal({128, 5, 6, 7} ,1)
@@ -64,6 +67,10 @@ end
 function circall(x,y,r,inner,outer)
 	circfill(x,y,r,inner)
 	circ(x,y,r,outer)
+end
+
+function textsplit(para)
+	return split(para, '\n')
 end
 
 function hcenter(s)
@@ -142,14 +149,11 @@ function init_end(temps)
 	bar = 1
 	
 	texty = 50
-	dialogue = text_short
+	dialogue = textsplit(scnscript1[scene])
 end
 
-function ctn_adv(s)
-	--todo: all of this
-	dialogue=split(scnscript2[scene], '\n')
-	
-	
+function ctn_adv()
+	dialogue=textsplit(scnscript2[scene])
 	bar=1
 	texty=80
 	stage += 1
@@ -177,7 +181,7 @@ end
 function update_end()
 	timer += timedir
 	if timer % maxtimer == 0 then timedir *= -1 end
-	if timer == 0 then bar+=3; if bar>#dialogue then ctn_adv(scene) end end
+	if timer == 0 then bar+=3; if bar>#dialogue then ctn_adv() end end
 	
 	--debug back to main menu
 	if btn(❎) then _init() end
@@ -207,9 +211,9 @@ end
 	--author's note: how am i supposed to make walls of text in pico-8?
 	--lzw seems like overkill, but these feel like headaches waiting to happen.
 
-text_short = split([[the following message
+text_short = [[the following message
 is left short on
-purpose.]], '\n')
+purpose.]]
 
 text_good = [[and so, our hero
 bravely stepped
@@ -230,10 +234,10 @@ todo: write ending
 --ending 2 (wait)
 text_wait_1=[[we watched the horizon
 as the seconds
-turned to minutes…
-and the minutes turned to hours…
-and the hours turned to days…
-and the days turned to months…
+turned to minutes...
+and the minutes turned
+to hours... turned to
+days... turned to months...
 and yet, the promised
 hero of legend
 never arrived]]
@@ -246,9 +250,15 @@ we remain vigilant...
 and above all else...
 w e
 r e m a i n
-∧∧∧∧∧
-∧∧∧∧∧
-∧∧∧∧∧]]
+though our hero
+may have left us
+to fend for ourselves...
+we must press onwards,
+holding onto a single
+comforting thought...
+if we are what's left...
+then we have been left
+in capable hands.]]
 --ending 3 (hold)
 text_error=[[exited with error code 51331:
 unexpected entity on title screen
@@ -269,8 +279,8 @@ reboot in safe mode:]]
 text_contingency=[[]]
 
 --script placements
-scnscript1={text_short,text_short,text_short,text_short}
-scnscript2={text_good,text_wait_1,text_wait_1,text_short}
+scnscript1={text_short,text_wait_1,text_short,text_short}
+scnscript2={text_good,text_wait_2,text_wait_2,text_short}
 
 __gfx__
 00000000222233333333333333333333333333333333333333333333333333333333222200000000000000000000000000000000000000000000000000000000
