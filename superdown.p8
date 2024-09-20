@@ -4,6 +4,10 @@ __lua__
 -- ⬇️⬇️⬇️ an original game ⬇️⬇️⬇️
 -- ⬇️⬇️⬇️  by @resonathan  ⬇️⬇️⬇️
 
+-- alt. cart text:
+-- super press down pika b game
+-- $1 must have pika box to play
+
 --[[ spoiler warning
 if you have not played all
 endings and don't want to know
@@ -21,11 +25,13 @@ scenes (endings):
 4: beginning of the end (press or hold left)
 
 stages (game states):
--2: ☉ ending "jumpscare"
+<0: no _update()/flip() only
 -1: functionless button
 0: main screen
 1: 0 w/ button pressed
-2: cutscene
+2: cutscene 1 (no art)
+3: cutscene 2 (w/ art)
+4: the end screen (todo)
 ]]--
 
 
@@ -121,7 +127,10 @@ function update_main()
 			timer = timer - 1
 			if timer < 1 then hold_scare() end-- hold ending
 		else --i.e. if ⬇️ is released
-			sfx(2);init_end(1) end -- good ending
+			sfx(2)
+			blackout(30,3,1)
+			init_end(1) 
+		end -- good ending
 	end--of stage 1
 end--of _update()
 
@@ -131,13 +140,13 @@ function draw_main()
 	
 	--plate
 	--circfill(60, 71, 37, 3)
-	circall(60, 71, 37, 3, 1)
+	circall(62, 72, 37, 3, 1)
 	
 	--button side
-	circall(60, 70, 30, 2, 1)
+	circall(62, 70, 30, 2, 1)
 	
 	--button top
-	circall(60, (btn(⬇️) and 65 or 60), 30, 3, 1)
+	circall(62, (btn(⬇️) and 65 or 60), 30, 3, 1)
 	
 	--print menu text
 	color(1)
@@ -223,10 +232,10 @@ function hold_scare()
 	pal(0,128,1)
 	
 	--write console log
-	texty=0
+	--texty=0
 	for _,logline in pairs(textsplit(text_error)) do
 		print(logline,4)
-		for i=0,1.2*#logline do
+		for i=0,1.35*#logline do
 			flip()
 		end
 	end
@@ -235,10 +244,9 @@ function hold_scare()
 	pal(0,0,1)
 	
 	--shorter reboot
-	blackout(13,-1,0)
-	blackout(1,-1,4)
-	blackout(9,-1,1)
-	blackout(2,-1,0)
+	blackout(42,-1,0)
+	blackout(25,-1,1)
+	blackout(9,-1,0)
 	
 	--begin true cutscene
 	init_end(2)
@@ -301,36 +309,34 @@ then we have been left
 in capable hands.]]
 --ending 3 (hold)
 text_error=[[exited with error code 125620:
-reason for crash:
-unexpected entity found
-
+	unexpected entity found
 
 begin troubleshooting...
 attempting to locate entity:
-success
-	location:
-	title screen
+	success
+		location:
+		title screen
 
 attempting to eliminate entity: 
-fail
+	fail
 attempting to reenforce barrier: 
-fail
-att3mpting to load music:
-f█il
+	fail
+attempting to play music:
+	sound disabled in safe mode
 attempting to access title: 
-fail
+	fail
 attempting to access ending: 
-partial success
+	partial success
 attempting to load ending:
 	good ending:
-	fail
+		fail
 	bad ending:
-	fail
+		fail
 	686f6c646c656674.rom:
 		error: unknown
 		flagged for remediation
 	contingency ending: 
-	success
+		success
 attempting to reboot console:]]
 text_contingency=[[]]
 
@@ -512,7 +518,7 @@ __map__
 1010101010101010101010101010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 1010101010101010101010101010101000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __sfx__
-000100002467024650156301561000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
+010100002467024650156301561000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
 000100001d4301a640174501864017440156300e43002020030500105002050020500105000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 000900001d6601a650176501864017640156300e6300b620096100961005610026100161000600006000060000600006000060000600006000060000600006000060000600006000060000600006000060000600
 050a00011c35000300003000030000300003000030018300183001830018300183001830018300183000030000300003000030000300003000030000300003000030000300003000030000300003000030000000
