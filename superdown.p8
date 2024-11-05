@@ -65,20 +65,25 @@ function _update()
 	if stage < 0 then --do nothing
 	elseif stage < 2 then update_main()
 	elseif stage >= 2 then update_end() end
-end
 
 -------------------------------
 				-- helper functions --
 function circall(x,y,r,inner,outer)
+--circfill with added outline
 	circfill(x,y,r,inner)
 	circ(x,y,r,outer)
 end
 
 function textsplit(para)
+--returns [[text wall]] as list
+--of "lines of text"
 	return split(para, '\n')
 end
 
 function blackout(t,s,c)
+--sets the screen to color "c"
+--for "t" frames, then sets it
+--to stage "s"
 	stage=-9
 	for i=1,t do
 		cls(c)
@@ -102,6 +107,14 @@ function vcenter(s)
   return 61
 end
 
+--[[ unused code
+only suppresses next pause, making it useless for flip(), where it's needed the most.
+could maybe be used by just looping it a bunch before jumpscare, but that seems excessive.
+--supress pause
+	if(btnp(6,0))then
+		poke(0x5f30,1)
+end
+]]
 -->8
 -- ⬇️ button screen
 
@@ -139,7 +152,6 @@ function draw_main()
 	cls(4)
 	
 	--plate
-	--circfill(60, 71, 37, 3)
 	circall(62, 72, 37, 3, 1)
 	
 	--button side
@@ -213,11 +225,19 @@ end
 -->8
 -- ☉ scary vfx
 function hold_scare()
+	disable_pause = true
+
 	--jumpscare
 	for j=0,20 do
 		sfx(3,-1,0,1)
-		for i=0,j+5 do
-		print("\^w\^t☉",rnd(137)-5,rnd(137)-5,1) end
+		for i=0,j+1 do
+			--eyeball print
+			--print("\^w\^t☉",rnd(137)-5,rnd(137)-5,1) 
+			
+			--lines
+			rand_pos=rnd(127)
+			line(0,rand_pos,126,rand_pos,1)
+		end
 		flip()
 	end
 	
@@ -251,6 +271,8 @@ function hold_scare()
 	--begin true cutscene
 	init_end(2)
 	ctn_adv()
+	
+	disable_pause = false
 end
 -->8
 -- ▤ ending dialogue
@@ -339,6 +361,8 @@ attempting to load ending:
 		success
 attempting to reboot console:]]
 text_contingency=[[]]
+
+text_meeting=[[]]
 
 --script placements
 scnscript1={text_short,text_wait_1,text_short,text_short}
